@@ -3,36 +3,38 @@ let github = require("@actions/github");
 let cp = require("child_process");
 
 try {
-  let paths = core.getInput("paths");
-  if (typeof paths === "string") {
-    paths = [paths];
-  }
-
-  console.log(`paths are ${paths}!`);
-
-  let result = cp.execSync("git branch -a");
-  console.log(result.toString());
+  let pathname = core.getInput("path");
 
   try {
-    console.log(cp.execSync("git log --oneline").toString());
+    let output = cp
+      .execSync(
+        `git diff --name-only ${github.context.payload.pull_request.base.sha}`
+      )
+      .toString();
+    let changedPaths = output.trim().split("\n");
+
+    console.log("Detected changed paths:", changedPaths);
+
+    if (changedPaths.length > 0) {
+      let containsTarget = changedPaths.some((filepath) => {
+        return filepath.includes(pathname);
+      });
+
+      if (containsTarget) {
+        console.log("has change in", pathname);
+        core.setOutput("changed", "true");
+      } else {
+        console.log("No change in", pathname);
+        core.setOutput("changed", "false");
+      }
+    } else {
+      console.log("No change");
+      core.setOutput("changed", "false");
+    }
   } catch (error) {
     console.log("Failed", error);
   }
 
-  try {
-    console.log(
-      github.context.payload.pull_request.base.sha,
-      cp
-        .execSync(
-          `git diff --stat ${github.context.payload.pull_request.base.sha}`
-        )
-        .toString()
-    );
-  } catch (error) {
-    console.log("Failed", error);
-  }
-
-  core.setOutput("changed", "TODO");
   // Get the JSON webhook payload for the event that triggered the workflow
   let payload = JSON.stringify(github.context.payload, undefined, 2);
   console.log(`The event payload: ${payload}`);

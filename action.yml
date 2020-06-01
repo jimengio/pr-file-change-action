@@ -1,10 +1,10 @@
-name: "Hello World"
-description: "Greet someone and record the time"
+name: "PR change detector"
+description: "Detect if path changes"
 inputs:
-  paths:
+  path:
     description: "paths to detect"
     required: true
-    default: "[]"
+    default: "TODO_FILENAME"
 outputs:
   changed: # id of output
     description: "whether changed"
