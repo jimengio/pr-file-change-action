@@ -13,7 +13,10 @@ try {
       .toString();
     let changedPaths = output.trim().split("\n");
 
-    console.log("Detected changed paths:", changedPaths);
+    console.log(
+      "Detected changed paths:",
+      JSON.stringify(changedPaths, null, 2)
+    );
 
     if (changedPaths.length > 0) {
       let containsTarget = changedPaths.some((filepath) => {
