@@ -11,7 +11,7 @@ try {
   console.log(`paths are ${paths}!`);
 
   let result = cp.execFileSync("git", ["branch", "-a"]);
-  console.log(result);
+  console.log(result.toString());
 
   core.setOutput("changed", "TODO");
   // Get the JSON webhook payload for the event that triggered the workflow
