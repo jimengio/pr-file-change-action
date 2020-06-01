@@ -6,6 +6,9 @@ try {
   let pathname = core.getInput("path");
 
   try {
+    // use changed=true by default
+    core.setOutput("changed", "true");
+
     let output = cp
       .execSync(
         `git diff --name-only ${github.context.payload.pull_request.base.sha}`
