@@ -13,6 +13,20 @@ try {
   let result = cp.execFileSync("git", ["branch", "-a"]);
   console.log(result.toString());
 
+  try {
+    console.log(
+      cp
+        .execSync("git", [
+          "diff",
+          "--stat",
+          github.context.payload.pull_request.base.ref,
+        ])
+        .toString()
+    );
+  } catch (error) {
+    console.log("Failed", error);
+  }
+
   core.setOutput("changed", "TODO");
   // Get the JSON webhook payload for the event that triggered the workflow
   let payload = JSON.stringify(github.context.payload, undefined, 2);
