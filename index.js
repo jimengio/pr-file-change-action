@@ -13,25 +13,25 @@ try {
       .toString();
     let changedPaths = output.trim().split("\n");
 
-    console.log(
-      "Detected changed paths:",
-      JSON.stringify(changedPaths, null, 2)
-    );
-
     if (changedPaths.length > 0) {
-      let containsTarget = changedPaths.some((filepath) => {
+      let targetPaths = changedPaths.filter((filepath) => {
         return filepath.includes(pathname);
       });
 
-      if (containsTarget) {
-        console.log("has change in", pathname);
+      console.log(
+        `Among ${changedPaths.length} files, targets are detected:`,
+        JSON.stringify(changedPaths, null, 2)
+      );
+
+      if (targetPaths) {
+        console.log("Has change in", pathname);
         core.setOutput("changed", "true");
       } else {
         console.log("No change in", pathname);
         core.setOutput("changed", "false");
       }
     } else {
-      console.log("No change");
+      console.log("Nothing changed in the PR");
       core.setOutput("changed", "false");
     }
   } catch (error) {
@@ -39,7 +39,7 @@ try {
   }
 
   // Get the JSON webhook payload for the event that triggered the workflow
-  let payload = JSON.stringify(github.context.payload, undefined, 2);
+  let payload = JSON.stringify(github.context.payload);
   console.log(`The event payload: ${payload}`);
 } catch (error) {
   core.setFailed(error.message);

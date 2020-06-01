@@ -4,20 +4,26 @@ This action prints "Hello World" or "Hello" + the name of a person to greet to t
 
 ## Inputs
 
-### `who-to-greet`
+### `path`
 
-**Required** The name of the person to greet. Default `"World"`.
+**Required** The path to detect.
 
 ## Outputs
 
-### `time`
+### `changed`
 
-The time we greeted you.
+Whether or not change in files in the path.
 
 ## Example usage
 
 ```yaml
-uses: actions/hello-world-javascript-action@master
-with:
-  who-to-greet: 'Mona the Octocat'
+- name: Detect changes in demo/
+  uses: jimengio/pr-file-change-action@master
+  id: demo
+  with:
+    path: demo/
+
+- name: Test dashboard
+  if: steps.demo.outputs.changed == 'true'
+  run: echo run demo...
 ```
