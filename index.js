@@ -10,18 +10,22 @@ try {
 
   console.log(`paths are ${paths}!`);
 
-  let result = cp.execFileSync("git", ["branch", "-a"]);
+  let result = cp.execSync("git branch -a");
   console.log(result.toString());
 
   try {
-    console.log(cp.execSync("git", ["log", "--oneline"]).toString());
+    console.log(cp.execSync("git log --oneline").toString());
+  } catch (error) {
+    console.log("Failed", error);
+  }
+
+  try {
     console.log(
+      github.context.payload.pull_request.base.sha,
       cp
-        .execSync("git", [
-          "diff",
-          "--stat",
-          github.context.payload.pull_request.base.sha,
-        ])
+        .execSync(
+          `git diff --stat ${github.context.payload.pull_request.base.sha}`
+        )
         .toString()
     );
   } catch (error) {
