@@ -20,10 +20,10 @@ try {
 
       console.log(
         `Among ${changedPaths.length} files, targets are detected:`,
-        JSON.stringify(changedPaths, null, 2)
+        JSON.stringify(targetPaths, null, 2)
       );
 
-      if (targetPaths) {
+      if (targetPaths.length > 0) {
         console.log("Has change in", pathname);
         core.setOutput("changed", "true");
       } else {
