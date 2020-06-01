@@ -14,12 +14,13 @@ try {
   console.log(result.toString());
 
   try {
+    console.log(cp.execSync("git", ["log", "--oneline"]).toString());
     console.log(
       cp
         .execSync("git", [
           "diff",
           "--stat",
-          github.context.payload.pull_request.base.ref,
+          github.context.payload.pull_request.base.sha,
         ])
         .toString()
     );
