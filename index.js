@@ -11,6 +11,7 @@ try {
 
     let output = cp
       .execSync(
+        // list changed file names relative to base commit
         `git diff --name-only ${github.context.payload.pull_request.base.sha}`
       )
       .toString();
@@ -43,7 +44,8 @@ try {
 
   // Get the JSON webhook payload for the event that triggered the workflow
   let payload = JSON.stringify(github.context.payload);
-  console.log(`The event payload: ${payload}`);
+  console.log(`The event payload:`);
+  console.log(payload)
 } catch (error) {
   core.setFailed(error.message);
 }

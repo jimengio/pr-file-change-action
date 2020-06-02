@@ -27,3 +27,13 @@ Whether or not change in files in the path.
   if: steps.demo.outputs.changed == 'true'
   run: echo run demo...
 ```
+
+## Features
+
+Available:
+
+- Detects changed paths in PR
+
+TODO:
+
+- Detect `master` branch.
