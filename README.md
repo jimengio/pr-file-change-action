@@ -33,7 +33,12 @@ Whether or not change in files in the path.
 Available:
 
 - Detects changed paths in PR
+- Detect `master` branch.
 
 TODO:
 
-- Detect `master` branch.
+- Detect release branches.
+
+### Credits
+
+Basic ideas of this actions is stealed from [has-changed-path](https://github.com/MarceloPrado/has-changed-path), but it's rewritten in JavaScript for detailed detections.
