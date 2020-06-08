@@ -5,11 +5,13 @@
   "main": "index.js",
   "scripts": {
     "bundle": "webpack",
+    "add-code": "git add .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "pre-commit": {
     "run": [
-      "bundle"
+      "bundle",
+      "add-code"
     ],
     "silient": false
   },
