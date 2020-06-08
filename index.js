@@ -42,8 +42,8 @@ let detectChanged = () => {
 try {
   // Get the JSON webhook payload for the event that triggered the workflow
   let payload = github.context.payload;
-  console.log(`The event payload:`);
-  console.log(JSON.stringify(payload));
+  // console.log(`The event payload:`);
+  // console.log(JSON.stringify(payload));
 
   if (payload.pull_request != null) {
     detectChanged();
